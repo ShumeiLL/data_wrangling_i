@@ -205,7 +205,7 @@ litters_df
 #litters_df
 ```
 
-check out ‘?read_csv()’ for more information.
+check out `?read_csv()` for more information.
 
 ## Other file formats
 
@@ -258,7 +258,7 @@ pulse_df
 
 ## Comparison with Base R
 
-what about ‘read.csv’…? read.csv is build into R, don’t need to load any
+what about `read.csv`…? read.csv is build into R, don’t need to load any
 packages
 
 use read_csv! do NOT use read.csv!!!
