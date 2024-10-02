@@ -130,3 +130,92 @@ analysis_result %>%
     ##   <chr>     <dbl> <dbl>
     ## 1 treatment   4       8
     ## 2 placebo     3.5     4
+
+## Binding rows
+
+Using the LotR data.
+
+First step: import each table.
+
+``` r
+fellowship_ring = 
+  readxl::read_excel("data/LotR_Words.xlsx", range = "B3:D6") %>%
+  mutate(movie = "fellowship_ring")
+
+fellowship_ring
+```
+
+    ## # A tibble: 3 × 4
+    ##   Race   Female  Male movie          
+    ##   <chr>   <dbl> <dbl> <chr>          
+    ## 1 Elf      1229   971 fellowship_ring
+    ## 2 Hobbit     14  3644 fellowship_ring
+    ## 3 Man         0  1995 fellowship_ring
+
+``` r
+two_towers = 
+  readxl::read_excel("data/LotR_Words.xlsx", range = "F3:H6") %>%
+  mutate(movie = "two_towers")
+
+two_towers
+```
+
+    ## # A tibble: 3 × 4
+    ##   Race   Female  Male movie     
+    ##   <chr>   <dbl> <dbl> <chr>     
+    ## 1 Elf       331   513 two_towers
+    ## 2 Hobbit      0  2463 two_towers
+    ## 3 Man       401  3589 two_towers
+
+``` r
+return_king = 
+  readxl::read_excel("data/LotR_Words.xlsx", range = "J3:L6") %>%
+  mutate(movie = "return_king")
+
+return_king
+```
+
+    ## # A tibble: 3 × 4
+    ##   Race   Female  Male movie      
+    ##   <chr>   <dbl> <dbl> <chr>      
+    ## 1 Elf       183   510 return_king
+    ## 2 Hobbit      2  2673 return_king
+    ## 3 Man       268  2459 return_king
+
+Bind all the rows together
+
+``` r
+lotr_tidy = 
+  bind_rows(fellowship_ring, two_towers, return_king) %>%
+  janitor::clean_names() |>
+  relocate(movie) |>
+  pivot_longer(
+    female:male,
+    names_to = "gender",
+    values_to = "words"
+  )
+
+lotr_tidy
+```
+
+    ## # A tibble: 18 × 4
+    ##    movie           race   gender words
+    ##    <chr>           <chr>  <chr>  <dbl>
+    ##  1 fellowship_ring Elf    female  1229
+    ##  2 fellowship_ring Elf    male     971
+    ##  3 fellowship_ring Hobbit female    14
+    ##  4 fellowship_ring Hobbit male    3644
+    ##  5 fellowship_ring Man    female     0
+    ##  6 fellowship_ring Man    male    1995
+    ##  7 two_towers      Elf    female   331
+    ##  8 two_towers      Elf    male     513
+    ##  9 two_towers      Hobbit female     0
+    ## 10 two_towers      Hobbit male    2463
+    ## 11 two_towers      Man    female   401
+    ## 12 two_towers      Man    male    3589
+    ## 13 return_king     Elf    female   183
+    ## 14 return_king     Elf    male     510
+    ## 15 return_king     Hobbit female     2
+    ## 16 return_king     Hobbit male    2673
+    ## 17 return_king     Man    female   268
+    ## 18 return_king     Man    male    2459
