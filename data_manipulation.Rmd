@@ -115,7 +115,7 @@ drop_na(litters_df) #drop any missing data
 drop_na(litters_df, gd0_weight) #drop missing data in gd0_weight
 ```
 
-## `mutate`
+## `mutate` #变异
 
 ```{r}
 mutate(litters_df, wt_gain = gd18_weight - gd0_weight) #create new variable - wt_gain

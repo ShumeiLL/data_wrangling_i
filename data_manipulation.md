@@ -584,7 +584,7 @@ drop_na(litters_df, gd0_weight) #drop missing data in gd0_weight
     ## # ℹ 24 more rows
     ## # ℹ 2 more variables: pups_dead_birth <dbl>, pups_survive <dbl>
 
-## `mutate`
+## `mutate` \#变异
 
 ``` r
 mutate(litters_df, wt_gain = gd18_weight - gd0_weight) #create new variable - wt_gain
