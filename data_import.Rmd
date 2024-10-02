@@ -35,10 +35,24 @@ tail(litters_df) #last 6 rows
 skimr::skim(litters_df)
 ```
 
+## Options to read_csv
 
+```{r}
+litters_df = read_csv("./data/FAS_litters.csv", skip = 10, col_names = FALSE) #skip first 10 rows
+litters_df
+```
 
+```{r}
+litters_df = read_csv("./data/FAS_litters.csv", na = c("", "NA", ".", 999))
+litters_df
+```
 
+```{r}
+litters_df = read_csv("./data/FAS_litters.csv", )
+litters_df
+```
 
+check out '?read_csv()' for more information.
 
 
 
