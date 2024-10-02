@@ -131,9 +131,75 @@ mutate(
 )
 ```
 
+## `arrange`
 
+```{r}
+arrange(litters_df, gd0_weight) #arrange increasing order
 
+arrange(litters_df, desc(gd0_weight)) #arrange decreasing order
 
+arrange(litters_df, pups_born_alive, gd0_weight) #first arrange pups_born_alive in increasing order, then arrange gd0 in increasing order
+```
+
+## PIPING!!! `%>%`
+
+Do NOT do this!
+```{r}
+litters_df = read_csv("data/FAS_litters.csv", na = c("NA", "", "."))
+
+litters_df = janitor::clean_names(litters_df)
+
+litters_df = select(litters_df, -pups_born_alive)
+
+litters_df = filter(litters_df, group == "Con7")
+
+litters_df = mutate(litters_df, wt_gain = gd18_weight - gd0_weight)
+
+litters_df
+```
+
+Don't do this!
+```{r}
+filter(select(janitor::clean_names(read.csv("data/FAS_litters.csv", na = c("NA", "", "."))), -pups_born_alive), group == "Con7")
+```
+
+DO THIS!!!
+```{r}
+litters_df = 
+  read_csv("data/FAS_litters.csv", na = c("NA", "", ".")) %>%
+  janitor::clean_names() |>
+  select(-pups_born_alive) |>
+  filter(group == "Con7") |>
+  mutate(
+    wt_gain = gd18_weight - gd0_weight
+  )
+litters_df
+```
+
+Pipe with the thing isn't the first argument.
+
+```{r}
+read_csv("data/FAS_litters.csv", na = c("NA", "", ".")) |>
+  janitor::clean_names() |>
+  mutate(wt_gain = gd18_weight - gd0_weight) |>
+  lm(wt_gain ~ pups_born_alive, data = _)
+```
+
+Export data
+
+```{r}
+litters_df = 
+  read_csv("data/FAS_litters.csv", na = c("NA", "", ".")) %>%
+  janitor::clean_names() |>
+  mutate(
+    wt_gain = gd18_weight - gd0_weight,
+    group = str_to_lower(group)
+  ) |>
+  select(-pups_born_alive) |>
+  filter(group == "con7")
+
+write_csv(litters_df, "data/cleaned_fas_litters.csv")
+```
 
 
 
