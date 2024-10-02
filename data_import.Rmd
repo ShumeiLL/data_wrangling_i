@@ -13,9 +13,37 @@ library(tidyverse)
 Read in the litters dataset.
 
 ```{r}
-litters_df = read_csv("./data/FAS_litters.csv")
+litters_df = read_csv("./data/FAS_litters.csv") #complex names bother us
 litters_df = janitor::clean_names(litters_df) #can use library(janitor), but at this time, we only need one function (clean_names) which from the janitor package, so we can use janitor::clean_names to import the certain function
 ```
 
 ## Take a look at the data
+
+Printing in the console.
+
+```{r}
+litters_df
+```
+
+```{r}
+head(litters_df) #first 6 rows
+
+tail(litters_df) #last 6 rows
+```
+
+```{r}
+skimr::skim(litters_df)
+```
+
+
+
+
+
+
+
+
+
+
+
+
 
