@@ -16,6 +16,11 @@ library(tidyverse)
     ## ✖ dplyr::lag()    masks stats::lag()
     ## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
 
+``` r
+library(readxl) #read excel files
+library(haven) #read SAS files
+```
+
 ## Read in some data
 
 Read in the litters dataset.
@@ -196,37 +201,57 @@ litters_df
     ## #   `Pups survive` <dbl>
 
 ``` r
-litters_df = read_csv("./data/FAS_litters.csv", )
+#litters_df = read_csv("./data/FAS_litters.csv", col_types = )
+#litters_df
 ```
-
-    ## Rows: 49 Columns: 8
-    ## ── Column specification ────────────────────────────────────────────────────────
-    ## Delimiter: ","
-    ## chr (4): Group, Litter Number, GD0 weight, GD18 weight
-    ## dbl (4): GD of Birth, Pups born alive, Pups dead @ birth, Pups survive
-    ## 
-    ## ℹ Use `spec()` to retrieve the full column specification for this data.
-    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-
-``` r
-litters_df
-```
-
-    ## # A tibble: 49 × 8
-    ##    Group `Litter Number` `GD0 weight` `GD18 weight` `GD of Birth`
-    ##    <chr> <chr>           <chr>        <chr>                 <dbl>
-    ##  1 Con7  #85             19.7         34.7                     20
-    ##  2 Con7  #1/2/95/2       27           42                       19
-    ##  3 Con7  #5/5/3/83/3-3   26           41.4                     19
-    ##  4 Con7  #5/4/2/95/2     28.5         44.1                     19
-    ##  5 Con7  #4/2/95/3-3     <NA>         <NA>                     20
-    ##  6 Con7  #2/2/95/3-2     <NA>         <NA>                     20
-    ##  7 Con7  #1/5/3/83/3-3/2 <NA>         <NA>                     20
-    ##  8 Con8  #3/83/3-3       <NA>         <NA>                     20
-    ##  9 Con8  #2/95/3         <NA>         <NA>                     20
-    ## 10 Con8  #3/5/2/2/95     28.5         <NA>                     20
-    ## # ℹ 39 more rows
-    ## # ℹ 3 more variables: `Pups born alive` <dbl>, `Pups dead @ birth` <dbl>,
-    ## #   `Pups survive` <dbl>
 
 check out ‘?read_csv()’ for more information.
+
+## Other file formats
+
+Read in an excel file.
+
+``` r
+library(readxl) #read excel files
+```
+
+``` r
+mlb_df = read_excel("./data/mlb11.xlsx", range = "A1:F7")
+mlb_df
+```
+
+    ## # A tibble: 6 × 6
+    ##   team                 runs at_bats  hits homeruns bat_avg
+    ##   <chr>               <dbl>   <dbl> <dbl>    <dbl>   <dbl>
+    ## 1 Texas Rangers         855    5659  1599      210   0.283
+    ## 2 Boston Red Sox        875    5710  1600      203   0.28 
+    ## 3 Detroit Tigers        787    5563  1540      169   0.277
+    ## 4 Kansas City Royals    730    5672  1560      129   0.275
+    ## 5 St. Louis Cardinals   762    5532  1513      162   0.273
+    ## 6 New York Mets         718    5600  1477      108   0.264
+
+Read in a SAS file.
+
+``` r
+library(haven) #read SAS files
+```
+
+``` r
+pulse_df = read_sas("./data/public_pulse_data.sas7bdat")
+pulse_df
+```
+
+    ## # A tibble: 1,087 × 7
+    ##       ID   age Sex    BDIScore_BL BDIScore_01m BDIScore_06m BDIScore_12m
+    ##    <dbl> <dbl> <chr>        <dbl>        <dbl>        <dbl>        <dbl>
+    ##  1 10003  48.0 male             7            1            2            0
+    ##  2 10015  72.5 male             6           NA           NA           NA
+    ##  3 10022  58.5 male            14            3            8           NA
+    ##  4 10026  72.7 male            20            6           18           16
+    ##  5 10035  60.4 male             4            0            1            2
+    ##  6 10050  84.7 male             2           10           12            8
+    ##  7 10078  31.3 male             4            0           NA           NA
+    ##  8 10088  56.9 male             5           NA            0            2
+    ##  9 10091  76.0 male             0            3            4            0
+    ## 10 10092  74.2 female          10            2           11            6
+    ## # ℹ 1,077 more rows
